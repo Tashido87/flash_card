@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flashcard Learner - White Theme</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Roboto:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Flashcard Learner ✨</h1>
+            <p class="instructions">Upload CSV: Chinese,Pinyin,Meaning</p>
+            <div class="upload-section">
+                <label for="csvFile" class="upload-button">Upload CSV File</label>
+                <input type="file" id="csvFile" accept=".csv">
+            </div>
+        </header>
+
+        <div class="settings-panel">
+            <div class="setting-group mode-selection-group">
+                <label>Mode:</label>
+                <div class="mode-buttons">
+                    <button class="mode-button active" data-mode="sequential">Sequential</button>
+                    <button class="mode-button" data-mode="random">Random</button>
+                </div>
+            </div>
+        </div>
+
+        <main>
+            <div class="flashcard-container">
+                <div class="flashcard">
+                    <div class="flashcard-inner">
+                        <div class="flashcard-front">
+                            <p id="cardFrontText">Upload a CSV to start!</p>
+                        </div>
+                        <div class="flashcard-back">
+                            <p id="cardBackChinese" class="chinese-text"></p>
+                            <p id="cardBackPinyin" class="pinyin-text"></p>
+                            <p id="cardBackMeaning" class="meaning-text"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="navigation-controls">
+                <button id="prevCard" class="nav-button">⬅️ Previous</button>
+                <p id="cardCounter">0 / 0</p>
+                <button id="nextCard" class="nav-button">Next ➡️</button>
+            </div>
+             <div class="controls">
+                <button id="showAnswer" class="control-button">Show Answer</button>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 Your Flashcard App by Tashido</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

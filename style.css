@@ -1,0 +1,326 @@
+body {
+    font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333; /* Default text color */
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    box-sizing: border-box;
+    background-color: #f4f6f8; /* Very light grey background */
+    overflow-x: hidden;
+}
+
+.container {
+    width: 100%;
+    max-width: 700px;
+    background: #ffffff; /* White container */
+    border-radius: 20px;
+    padding: 30px 40px; /* Adjusted padding */
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08); /* Softer shadow */
+    border: 1px solid #e9ecef; /* Subtle border */
+    text-align: center;
+}
+
+header h1 {
+    color: #2c3e50; /* Dark blue-grey for heading */
+    margin-bottom: 10px;
+    font-weight: 700;
+    font-size: 2.2em;
+}
+
+.instructions {
+    font-size: 0.95em;
+    color: #555; /* Medium grey for instructions */
+    margin-bottom: 25px;
+}
+
+.upload-section {
+    margin-bottom: 30px;
+}
+
+.upload-button {
+    background-color: #007bff; /* Primary blue */
+    color: white;
+    padding: 12px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: inline-block;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    font-weight: 500;
+    border: none;
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.25);
+}
+
+.upload-button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 123, 255, 0.3);
+}
+
+input[type="file"] {
+    display: none;
+}
+
+/* Settings Panel Styling */
+.settings-panel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.setting-group label {
+    font-size: 1em;
+    color: #495057; /* Dark grey for label */
+    font-weight: 500;
+    margin-right: 10px;
+}
+
+.mode-buttons {
+    display: flex;
+    background-color: #e9ecef; /* Light grey background for button group */
+    border-radius: 8px;
+    padding: 4px;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.mode-button {
+    padding: 8px 18px; /* Adjusted padding */
+    border: none;
+    background-color: transparent;
+    color: #495057; /* Default text color for mode buttons */
+    font-size: 0.9em;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 6px; /* Slightly softer radius */
+    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.mode-button.active {
+    background-color: #007bff; /* Primary blue for active button */
+    color: white;
+    box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3);
+}
+
+.mode-button:not(.active):hover {
+    background-color: #d1d8e0; /* Lighter hover for inactive */
+    color: #212529;
+}
+.mode-button:disabled {
+    color: #adb5bd;
+    cursor: not-allowed;
+    background-color: transparent !important;
+}
+.mode-button:disabled:hover {
+    box-shadow: none;
+}
+
+
+/* Flashcard Styling */
+.flashcard-container {
+    perspective: 1200px;
+    margin-bottom: 30px;
+    min-height: 300px; /* Adjusted */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.flashcard {
+    width: 90%;
+    max-width: 460px;
+    height: 280px; /* Slightly reduced height */
+    position: relative;
+    cursor: pointer;
+    transform-style: preserve-3d;
+    transition: transform 0.7s cubic-bezier(0.4, 0.0, 0.2, 1); /* Standard smooth flip */
+}
+
+.flashcard.is-flipped {
+    transform: rotateY(180deg);
+}
+
+.flashcard-inner {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transform-style: preserve-3d;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.flashcard-front,
+.flashcard-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 25px;
+    box-sizing: border-box;
+    border-radius: 15px; /* Rounded corners for cards */
+    background: rgba(255, 255, 255, 0.85); /* Semi-transparent white */
+    backdrop-filter: blur(6px); /* Subtle blur for glass effect */
+    -webkit-backdrop-filter: blur(6px);
+    border: 1px solid rgba(0, 0, 0, 0.08); /* Faint border */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07); /* Soft shadow for cards */
+    overflow-y: auto;
+}
+
+.flashcard-front p {
+    font-family: 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
+    font-size: 3em;
+    font-weight: 500;
+    color: #343a40; /* Dark grey for front text */
+    margin: 0;
+    line-height: 1.2;
+}
+
+.flashcard-back {
+    transform: rotateY(180deg);
+    gap: 15px;
+}
+
+.flashcard-back p {
+    margin: 0;
+    line-height: 1.45;
+}
+
+.chinese-text {
+    font-family: 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
+    font-size: 2.2em;
+    font-weight: 500;
+    color: #343a40;
+}
+
+.pinyin-text {
+    font-family: 'Roboto', 'Arial', sans-serif;
+    font-size: 1.4em;
+    color: #007bff; /* Primary blue for Pinyin */
+}
+
+.meaning-text {
+    font-family: 'Roboto', 'Segoe UI', sans-serif;
+    font-size: 1.3em;
+    color: #495057; /* Dark grey for meaning */
+    font-weight: 400;
+}
+
+/* Navigation and Controls */
+.navigation-controls, .controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 25px;
+    gap: 12px;
+    padding: 0 5px;
+}
+.controls {
+    justify-content: center;
+}
+
+.nav-button, .control-button {
+    background-color: #f8f9fa; /* Light grey background for buttons */
+    border: 1px solid #dee2e6; /* Standard border */
+    color: #343a40; /* Dark text for buttons */
+    padding: 10px 20px; /* Adjusted padding */
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    font-weight: 500;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.nav-button:hover, .control-button:hover {
+    background-color: #e9ecef; /* Slightly darker hover */
+    border-color: #ced4da;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.07);
+    transform: translateY(-1px);
+}
+
+.nav-button:disabled, .control-button:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+    background-color: #f8f9fa;
+    box-shadow: none;
+    transform: translateY(0);
+}
+
+#cardCounter {
+    font-size: 1em;
+    color: #495057;
+    font-weight: 500;
+    padding: 0 10px;
+    flex-shrink: 0;
+}
+
+footer {
+    margin-top: 35px;
+    font-size: 0.85em;
+    color: #6c757d; /* Muted grey for footer */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .container {
+        padding: 25px;
+    }
+    .flashcard {
+        height: 270px;
+    }
+    .flashcard-front p {
+        font-size: 2.7em;
+    }
+    .chinese-text {
+        font-size: 2em;
+    }
+    .pinyin-text, .meaning-text {
+        font-size: 1.2em;
+    }
+    .navigation-controls {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+    #cardCounter {
+        order: -1;
+        width: 100%;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    body { padding: 10px; }
+    .container { padding: 20px 15px; margin: 0; }
+    header h1 { font-size: 1.9em; }
+    .instructions { font-size: 0.9em; }
+    .upload-button { padding: 10px 20px; font-size: 0.95em; }
+    .mode-button { padding: 7px 15px; font-size: 0.85em; }
+    .settings-panel { margin-bottom: 25px; }
+    .flashcard-front p { font-size: 2.3em; }
+    .chinese-text { font-size: 1.9em; }
+    .pinyin-text, .meaning-text { font-size: 1.15em; }
+    .nav-button, .control-button { padding: 9px 16px; font-size: 0.9em; }
+    .flashcard-container { min-height: 250px; }
+    .flashcard { height: 240px; }
+.setting-group.mode-selection-group {
+  flex-direction: column; /* Stack "Mode:" label above buttons */
+  align-items: center; /* Center items when stacked */
+  gap: 8px; /* Adjust gap for vertical stacking */
+}
+
+.mode-buttons {
+  width: 100%; /* Make buttons stretch to fill the container */
+  display: flex; /* Ensure buttons are arranged in a flex container */
+  justify-content: center; /* Center buttons horizontally */
+}
+
+}
