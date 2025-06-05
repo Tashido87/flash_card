@@ -1,3 +1,92 @@
+/* Add this at the very TOP of your style.css */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    /* Consider resetting default margins and paddings here if you haven't already,
+       but be aware this will require you to define all spacing explicitly.
+       For now, just box-sizing is the most direct fix for width issues.
+       margin: 0;
+       padding: 0;
+    */
+}
+
+html {
+    width: 100%;
+    overflow-x: hidden; /* Prevent horizontal scrolling on the html element */
+    -webkit-text-size-adjust: 100%; /* Prevent font auto-scaling on some mobile browsers */
+    -ms-text-size-adjust: 100%;
+}
+
+body {
+    font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    margin: 0; /* Ensure no default browser margins on the body */
+    padding: 0; /* Reset body padding, will be handled by container or specific sections */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f4f6f8;
+    width: 100%; /* Make body take exactly the viewport width */
+    overflow-x: hidden; /* Crucial: prevent horizontal scrolling on the body */
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Adjust .container padding if body padding was removed.
+   The previous body had padding. If you want a similar visual effect of content
+   not touching the screen edges, ensure the .container or specific outer wrappers
+   handle this spacing.
+*/
+.container {
+    width: 100%;
+    max-width: 750px;
+    background: #ffffff;
+    border-radius: 20px;
+    /* Padding now defines the space from the container's edge to its content */
+    /* The body's padding was effectively doing this for the container before */
+    padding: 20px 15px; /* Adjust as needed for mobile and desktop */
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e9ecef;
+    text-align: center;
+    margin-top: 10px; /* Or use padding on body if preferred */
+    margin-bottom: 20px; /* Or use padding on body */
+    /* box-sizing: border-box; /* This is now handled by the global rule */
+}
+
+
+/* Ensure no other elements are causing overflow.
+   Review elements that might have explicit pixel widths exceeding screen sizes
+   or large horizontal margins/paddings without appropriate max-widths or responsive adjustments.
+   The elements like .flashcard-area, .flashcard, .flashcard-stack-bg are already using
+   width: 100% and max-width, which is good.
+*/
+
+
+/* MEDIA QUERIES - Example of how container padding might be adjusted */
+@media (min-width: 768px) { /* For tablets and larger */
+    .container {
+        padding: 20px 25px; /* Restore larger padding for desktop */
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 15px 10px; /* Fine-tune padding for very small screens */
+        margin-top: 5px;
+        border-radius: 15px; /* Optional: slightly smaller radius */
+    }
+    /* Other mobile-specific styles from your previous CSS... */
+}
+
+/*
+  Make sure your viewport meta tag in index.html is correct and includes user-scalable=no
+  if you want to prevent pinch-to-zoom, which can sometimes interfere with custom swipe.
+  Example: <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  The `user-scalable=no` was already in your latest HTML, which is good for this specific goal.
+*/
+
 body {
     font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #333;
