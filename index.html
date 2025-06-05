@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flashcard Learner - White Theme</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Advanced Flashcard Learner</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Roboto:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
@@ -12,27 +12,43 @@
 <body>
     <div class="container">
         <header>
-            <h1>Flashcard Learner ✨</h1>
+            <h1>Flashcard Pro 🚀</h1>
             <p class="instructions">Upload CSV: Chinese,Pinyin,Meaning</p>
             <div class="upload-section">
                 <label for="csvFile" class="upload-button">Upload CSV File</label>
                 <input type="file" id="csvFile" accept=".csv">
+                <p id="fileInfoMessage" class="file-info"></p>
             </div>
         </header>
 
         <div class="settings-panel">
             <div class="setting-group mode-selection-group">
-                <label>Mode:</label>
+                <label class="panel-label">Mode:</label>
                 <div class="mode-buttons">
                     <button class="mode-button active" data-mode="sequential">Sequential</button>
                     <button class="mode-button" data-mode="random">Random</button>
                 </div>
             </div>
+            <hr class="settings-divider">
+            <div class="setting-group auto-advance-toggle-group">
+                <label for="autoAdvanceToggle" class="panel-label">Auto-Advance:</label>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="autoAdvanceToggle">
+                    <span class="slider-toggle round"></span>
+                </label>
+            </div>
+            <div class="setting-group" id="autoAdvanceSliderGroup" style="display: none;">
+                <label for="autoAdvanceSlider" class="panel-label">Next card in:</label>
+                <input type="range" id="autoAdvanceSlider" min="2" max="15" value="5">
+                <span id="autoAdvanceValue" class="slider-value">5s</span>
+            </div>
         </div>
 
         <main>
-            <div class="flashcard-container">
-                <div class="flashcard">
+            <div class="flashcard-area">
+                <div class="flashcard-stack-bg flashcard-stack-bg-2"></div>
+                <div class="flashcard-stack-bg flashcard-stack-bg-1"></div>
+                <div class="flashcard" id="interactiveCard">
                     <div class="flashcard-inner">
                         <div class="flashcard-front">
                             <p id="cardFrontText">Upload a CSV to start!</p>
@@ -46,13 +62,12 @@
                 </div>
             </div>
 
+            <div id="cardCounter" class="card-counter-display">0 / 0</div>
+
             <div class="navigation-controls">
-                <button id="prevCard" class="nav-button">⬅️ Previous</button>
-                <p id="cardCounter">0 / 0</p>
+                <button id="prevCard" class="nav-button">⬅️ Prev</button>
+                <button id="showAnswer" class="control-button">Flip Card</button>
                 <button id="nextCard" class="nav-button">Next ➡️</button>
-            </div>
-             <div class="controls">
-                <button id="showAnswer" class="control-button">Show Answer</button>
             </div>
         </main>
 
