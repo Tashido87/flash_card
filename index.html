@@ -16,7 +16,7 @@
             <p class="instructions">Upload CSV: Chinese,Pinyin,Meaning</p>
             <div class="upload-section">
                 <label for="csvFile" class="upload-button">Upload CSV File</label>
-                <input type="file" id="csvFile" accept=".csv">
+                <input type="file" id="csvFile" accept=".csv" style="display: none;">
                 <p id="fileInfoMessage" class="file-info"></p>
             </div>
         </header>
@@ -46,17 +46,17 @@
 
         <main>
             <div class="flashcard-area">
-                <div class="flashcard-stack-bg flashcard-stack-bg-2"></div>
-                <div class="flashcard-stack-bg flashcard-stack-bg-1"></div>
                 <div class="flashcard" id="interactiveCard">
                     <div class="flashcard-inner">
                         <div class="flashcard-front">
+                            <div class="smoke-overlay"></div>
                             <div class="card-content">
                                 <p id="cardFrontText">Upload a CSV to start!</p>
                             </div>
                         </div>
                         <div class="flashcard-back">
-                             <div class="card-content">
+                            <div class="smoke-overlay"></div>
+                            <div class="card-content">
                                 <p id="cardBackChinese" class="chinese-text"></p>
                                 <p id="cardBackPinyin" class="pinyin-text"></p>
                                 <p id="cardBackMeaning" class="meaning-text"></p>
@@ -69,14 +69,24 @@
             <div id="cardCounter" class="card-counter-display">0 / 0</div>
 
             <div class="navigation-controls">
-                <button id="prevCard" class="nav-button">⬅️ Prev</button>
+                <button id="prevCard" class="nav-button">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M15 18l-6-6 6-6"/>
+                    </svg>
+                    Prev
+                </button>
                 <button id="showAnswer" class="control-button">Flip Card</button>
-                <button id="nextCard" class="nav-button">Next ➡️</button>
+                <button id="nextCard" class="nav-button">
+                    Next
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 18l6-6-6-6"/>
+                    </svg>
+                </button>
             </div>
         </main>
 
         <footer>
-            <p>&copy; 2025 Your Flashcard App</p>
+            <p>&copy; Tashido Flashcard App</p>
         </footer>
     </div>
 
