@@ -1,458 +1,206 @@
-/* Add this at the very TOP of your style.css */
 *,
 *::before,
 *::after {
     box-sizing: border-box;
-    /* Consider resetting default margins and paddings here if you haven't already,
-       but be aware this will require you to define all spacing explicitly.
-       For now, just box-sizing is the most direct fix for width issues.
-       margin: 0;
-       padding: 0;
-    */
 }
 
 html {
     width: 100%;
-    overflow-x: hidden; /* Prevent horizontal scrolling on the html element */
-    -webkit-text-size-adjust: 100%; /* Prevent font auto-scaling on some mobile browsers */
-    -ms-text-size-adjust: 100%;
+    overflow-x: hidden;
 }
-
-body {
-    font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #333;
-    margin: 0; /* Ensure no default browser margins on the body */
-    padding: 0; /* Reset body padding, will be handled by container or specific sections */
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    min-height: 100vh;
-    background-color: #f4f6f8;
-    width: 100%; /* Make body take exactly the viewport width */
-    overflow-x: hidden; /* Crucial: prevent horizontal scrolling on the body */
-    -webkit-tap-highlight-color: transparent;
-}
-
-/* Adjust .container padding if body padding was removed.
-   The previous body had padding. If you want a similar visual effect of content
-   not touching the screen edges, ensure the .container or specific outer wrappers
-   handle this spacing.
-*/
-.container {
-    width: 100%;
-    max-width: 750px;
-    background: #ffffff;
-    border-radius: 20px;
-    /* Padding now defines the space from the container's edge to its content */
-    /* The body's padding was effectively doing this for the container before */
-    padding: 20px 15px; /* Adjust as needed for mobile and desktop */
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-    border: 1px solid #e9ecef;
-    text-align: center;
-    margin-top: 10px; /* Or use padding on body if preferred */
-    margin-bottom: 20px; /* Or use padding on body */
-    /* box-sizing: border-box; /* This is now handled by the global rule */
-}
-
-
-/* Ensure no other elements are causing overflow.
-   Review elements that might have explicit pixel widths exceeding screen sizes
-   or large horizontal margins/paddings without appropriate max-widths or responsive adjustments.
-   The elements like .flashcard-area, .flashcard, .flashcard-stack-bg are already using
-   width: 100% and max-width, which is good.
-*/
-
-
-/* MEDIA QUERIES - Example of how container padding might be adjusted */
-@media (min-width: 768px) { /* For tablets and larger */
-    .container {
-        padding: 20px 25px; /* Restore larger padding for desktop */
-    }
-}
-
-@media (max-width: 480px) {
-    .container {
-        padding: 15px 10px; /* Fine-tune padding for very small screens */
-        margin-top: 5px;
-        border-radius: 15px; /* Optional: slightly smaller radius */
-    }
-    /* Other mobile-specific styles from your previous CSS... */
-}
-
-/*
-  Make sure your viewport meta tag in index.html is correct and includes user-scalable=no
-  if you want to prevent pinch-to-zoom, which can sometimes interfere with custom swipe.
-  Example: <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  The `user-scalable=no` was already in your latest HTML, which is good for this specific goal.
-*/
 
 body {
     font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #333;
     margin: 0;
-    padding: 15px; /* Reduced padding for more space on mobile */
+    padding: 15px;
     display: flex;
-    flex-direction: column; /* Allow header/footer and main content stacking */
-    justify-content: flex-start; /* Align to top */
+    flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
     min-height: 100vh;
-    box-sizing: border-box;
-    background-color: #f4f6f8;
+    background-color: #eef1f5; /* Slightly cooler background */
+    width: 100%;
     overflow-x: hidden;
-    -webkit-tap-highlight-color: transparent; /* Remove tap highlight on mobile */
+    -webkit-tap-highlight-color: transparent;
 }
 
 .container {
     width: 100%;
-    max-width: 750px; /* Slightly wider for bigger cards */
+    max-width: 750px;
     background: #ffffff;
     border-radius: 20px;
-    padding: 20px 25px; /* Adjusted padding */
+    padding: 20px 25px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
     border: 1px solid #e9ecef;
     text-align: center;
-    margin-top: 10px; /* Space from top */
-    margin-bottom: 20px; /* Space for footer */
-}
-
-header h1 {
-    color: #2c3e50;
-    margin-bottom: 8px;
-    font-weight: 700;
-    font-size: 2em; /* Adjusted */
-}
-
-.instructions {
-    font-size: 0.9em;
-    color: #555;
+    margin-top: 10px;
     margin-bottom: 20px;
 }
 
-.upload-section {
-    margin-bottom: 15px;
-}
-.file-info {
-    font-size: 0.8em;
-    color: #007bff;
-    margin-top: 8px;
-    min-height: 1.2em; /* Reserve space */
-}
-
-.upload-button {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 20px; /* Adjusted */
-    border-radius: 8px;
-    cursor: pointer;
-    display: inline-block;
-    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-    font-weight: 500;
-    border: none;
-    box-shadow: 0 3px 10px rgba(0, 123, 255, 0.2);
-}
-.upload-button:hover {
-    background-color: #0056b3;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 14px rgba(0, 123, 255, 0.25);
-}
-
-/* Settings Panel */
-.settings-panel {
-    display: flex;
-    flex-direction: column; /* Stack settings groups */
-    align-items: stretch; /* Make groups take available width */
-    gap: 12px; /* Space between setting groups */
-    background-color: rgba(244, 246, 248, 0.7); /* Subtle bg */
-    padding: 15px;
-    border-radius: 12px;
-    margin-bottom: 25px;
-    border: 1px solid #e0e5ea;
-}
-.setting-group {
-    display: flex;
-    justify-content: space-between; /* Align items within each group */
-    align-items: center;
-    gap: 10px;
-}
-.panel-label {
-    font-size: 0.95em;
-    color: #495057;
-    font-weight: 500;
-    white-space: nowrap;
-}
-.mode-buttons {
-    display: flex;
-    background-color: #e0e5ea;
-    border-radius: 8px;
-    padding: 3px;
-}
-.mode-button {
-    padding: 7px 15px;
-    border: none;
-    background-color: transparent;
-    color: #495057;
-    font-size: 0.85em;
-    font-weight: 500;
-    cursor: pointer;
-    border-radius: 6px;
-    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
-}
-.mode-button.active {
-    background-color: #007bff;
-    color: white;
-    box-shadow: 0 2px 6px rgba(0, 123, 255, 0.25);
-}
-.mode-button:not(.active):hover {
-    background-color: #cfd5db;
-}
-.mode-button:disabled, .toggle-switch input:disabled + .slider-toggle {
-    opacity: 0.6;
-    cursor: not-allowed;
-}
-.settings-divider {
-    border: none;
-    height: 1px;
-    background-color: #d1d8e0;
-    margin: 5px 0;
-}
-
-/* Toggle Switch */
-.toggle-switch {
-    position: relative;
-    display: inline-block;
-    width: 44px; height: 24px;
-}
+/* --- Settings Panel, Buttons, etc. (No changes from previous version) --- */
+header h1 { color: #2c3e50; margin-bottom: 8px; font-weight: 700; font-size: 2em; }
+.instructions { font-size: 0.9em; color: #555; margin-bottom: 20px; }
+.upload-section { margin-bottom: 15px; }
+.file-info { font-size: 0.8em; color: #007bff; margin-top: 8px; min-height: 1.2em; }
+.upload-button { background-color: #007bff; color: white; padding: 10px 20px; border-radius: 8px; cursor: pointer; display: inline-block; transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease; font-weight: 500; border: none; box-shadow: 0 3px 10px rgba(0, 123, 255, 0.2); }
+.upload-button:hover { background-color: #0056b3; transform: translateY(-2px); box-shadow: 0 5px 14px rgba(0, 123, 255, 0.25); }
+.settings-panel { display: flex; flex-direction: column; align-items: stretch; gap: 12px; background-color: rgba(244, 246, 248, 0.7); padding: 15px; border-radius: 12px; margin-bottom: 25px; border: 1px solid #e0e5ea; }
+.setting-group { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.panel-label { font-size: 0.95em; color: #495057; font-weight: 500; white-space: nowrap; }
+.mode-buttons { display: flex; background-color: #e0e5ea; border-radius: 8px; padding: 3px; }
+.mode-button { padding: 7px 15px; border: none; background-color: transparent; color: #495057; font-size: 0.85em; font-weight: 500; cursor: pointer; border-radius: 6px; transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease; }
+.mode-button.active { background-color: #007bff; color: white; box-shadow: 0 2px 6px rgba(0, 123, 255, 0.25); }
+.mode-button:not(.active):hover { background-color: #cfd5db; }
+.mode-button:disabled, .toggle-switch input:disabled + .slider-toggle { opacity: 0.6; cursor: not-allowed; }
+.settings-divider { border: none; height: 1px; background-color: #d1d8e0; margin: 5px 0; }
+.toggle-switch { position: relative; display: inline-block; width: 44px; height: 24px; }
 .toggle-switch input { opacity: 0; width: 0; height: 0; }
-.slider-toggle {
-    position: absolute; cursor: pointer;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background-color: #ccc;
-    transition: .4s; border-radius: 24px;
-}
-.slider-toggle:before {
-    position: absolute; content: "";
-    height: 18px; width: 18px;
-    left: 3px; bottom: 3px;
-    background-color: white;
-    transition: .4s; border-radius: 50%;
-}
+.slider-toggle { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 24px; }
+.slider-toggle:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
 input:checked + .slider-toggle { background-color: #007bff; }
 input:checked + .slider-toggle:before { transform: translateX(20px); }
-
-/* Slider */
-#autoAdvanceSliderGroup {
-    align-items: center; /* Vertically align label, slider, value */
-}
-input[type="range"] {
-    flex-grow: 1; /* Allow slider to take available space */
-    height: 8px;
-    -webkit-appearance: none;
-    appearance: none;
-    background: #d1d8e0;
-    border-radius: 5px;
-    outline: none;
-    opacity: 0.9;
-    transition: opacity .2s;
-}
+#autoAdvanceSliderGroup { align-items: center; }
+input[type="range"] { flex-grow: 1; height: 8px; -webkit-appearance: none; appearance: none; background: #d1d8e0; border-radius: 5px; outline: none; opacity: 0.9; transition: opacity .2s; }
 input[type="range"]:hover { opacity: 1; }
-input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none; appearance: none;
-    width: 18px; height: 18px;
-    background: #007bff;
-    cursor: pointer; border-radius: 50%;
-    box-shadow: 0 0 5px rgba(0,123,255,0.3);
-}
-input[type="range"]::-moz-range-thumb {
-    width: 18px; height: 18px;
-    background: #007bff;
-    cursor: pointer; border-radius: 50%;
-    border: none; /* Important for Firefox */
-    box-shadow: 0 0 5px rgba(0,123,255,0.3);
-}
-.slider-value {
-    font-size: 0.9em; color: #495057;
-    min-width: 28px; text-align: right;
-}
+input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 18px; height: 18px; background: #007bff; cursor: pointer; border-radius: 50%; box-shadow: 0 0 5px rgba(0,123,255,0.3); }
+input[type="range"]::-moz-range-thumb { width: 18px; height: 18px; background: #007bff; cursor: pointer; border-radius: 50%; border: none; box-shadow: 0 0 5px rgba(0,123,255,0.3); }
+.slider-value { font-size: 0.9em; color: #495057; min-width: 28px; text-align: right; }
+/* --- End of Unchanged Section --- */
 
 /* Flashcard Area & Stack */
-.flashcard-area {
-    position: relative;
+.flashcard-area { position: relative; width: 100%; min-height: 380px; display: flex; justify-content: center; align-items: center; margin-bottom: 15px; perspective: 1500px; }
+.flashcard-stack-bg { position: absolute; width: calc(100% - 20px); max-width: 500px; height: 340px; background-color: #e9ecef; border-radius: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); transition: transform 0.5s cubic-bezier(0.4, 0.0, 0.2, 1), opacity 0.5s ease; z-index: 1; }
+.flashcard-stack-bg-1 { transform: scale(0.96) translateY(12px); background-color: #e0e5ea; border-radius: 30px; z-index: 2; }
+.flashcard-stack-bg-2 { transform: scale(0.92) translateY(24px); background-color: #d1d8e0; border-radius: 30px; z-index: 1; }
+
+/* Main Flashcard - Apple Glass Effect */
+.flashcard { position: relative; width: 100%; max-width: 500px; height: 340px; cursor: pointer; transform-style: preserve-3d; transition: transform 0.7s cubic-bezier(0.4, 0.0, 0.2, 1); z-index: 3; }
+.flashcard.swiping-left { transition: transform 0.4s ease-out, opacity 0.4s ease-out; transform: translateX(-120%) rotate(-10deg) !important; opacity: 0.3 !important; }
+.flashcard.swiping-right { transition: transform 0.4s ease-out, opacity 0.4s ease-out; transform: translateX(120%) rotate(10deg) !important; opacity: 0.3 !important; }
+.flashcard.is-flipped { transform: rotateY(180deg); }
+.flashcard-inner { width: 100%; height: 100%; position: relative; text-align: center; transform-style: preserve-3d; }
+
+.flashcard-front,
+.flashcard-back {
+    position: absolute;
     width: 100%;
-    min-height: 380px; /* Increased for bigger cards + stack */
+    height: 100%;
+    -webkit-backface-visibility: hidden; /* ** FIX: Prevents mirrored text on flip ** */
+    backface-visibility: hidden;         /* ** FIX: Prevents mirrored text on flip ** */
+    transform: translateZ(0);            /* ** FIX: Promotes element to new layer for better rendering */
+    padding: 25px;
+    border-radius: 35px; /* ** STYLE: Softer glass corner effect ** */
+    overflow: hidden;    /* Crucial for containing the blurred pseudo-elements */
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 15px; /* Space before counter */
-    perspective: 1500px; /* For 3D effects on stack if desired */
+    background: rgba(245, 247, 250, 0.75); /* Frosted glass background */
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.7), /* Inner top highlight */
+                0 15px 40px rgba(0, 0, 0, 0.12); /* Main drop shadow */
 }
-.flashcard-stack-bg {
-    position: absolute;
-    width: calc(100% - 20px); /* Max width of these is slightly smaller than main */
-    max-width: 500px; /* Match new main card max-width */
-    height: 340px; /* Match new main card height */
-    background-color: #e9ecef;
-    border-radius: 18px; /* Increased */
-    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-    transition: transform 0.5s cubic-bezier(0.4, 0.0, 0.2, 1), opacity 0.5s ease;
-    z-index: 1; /* Base for stack */
+
+.flashcard-back {
+    transform: rotateY(180deg) translateZ(1px); /* Add slight Z translate to ensure it's on top when flipped */
 }
-.flashcard-stack-bg-1 { /* Immediately behind */
-    transform: scale(0.96) translateY(12px);
-    background-color: #e0e5ea;
+
+/* Container for text, to layer it above the smoke effects */
+.card-content {
+    position: relative;
     z-index: 2;
-}
-.flashcard-stack-bg-2 { /* Furthest behind */
-    transform: scale(0.92) translateY(24px);
-    background-color: #d1d8e0;
-    z-index: 1;
-}
-
-/* Main Flashcard - BIGGER */
-.flashcard {
-    position: relative; /* Changed from absolute for easier centering if area handles it */
-    width: 100%;
-    max-width: 500px; /* Increased size */
-    height: 340px;    /* Increased size */
-    cursor: pointer;
-    transform-style: preserve-3d;
-    transition: transform 0.7s cubic-bezier(0.4, 0.0, 0.2, 1);
-    z-index: 3; /* On top of stack BGs */
-    opacity: 1; /* Ensure it's visible */
-}
-.flashcard.swiping-left {
-    transform: translateX(-120%) rotate(-10deg) !important; /* Swipe out animation */
-    opacity: 0.3 !important;
-}
-.flashcard.swiping-right {
-    transform: translateX(120%) rotate(10deg) !important; /* Swipe out animation */
-    opacity: 0.3 !important;
-}
-.flashcard.is-flipped { transform: rotateY(180deg); }
-
-.flashcard-inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 18px;
     width: 100%;
     height: 100%;
-    text-align: center;
-    transform-style: preserve-3d;
-    position: absolute;
-    top: 0;
-    left: 0;
 }
 
-.flashcard-front, .flashcard-back {
-    position: absolute; width: 100%; height: 100%;
-    -webkit-backface-visibility: hidden; backface-visibility: hidden;
-    display: flex; flex-direction: column;
-    justify-content: center; align-items: center;
-    padding: 25px; box-sizing: border-box;
-    border-radius: 18px; /* Increased */
-    background: rgba(255, 255, 255, 0.92); /* More opaque */
-    backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-    overflow-y: auto;
+/* Dynamic Smoky Gradient */
+.flashcard-front::before,
+.flashcard-back::before {
+    content: '';
+    position: absolute;
+    z-index: 1; /* Behind card-content but on top of card background */
+    pointer-events: none;
+    /* Create a wide element to allow horizontal movement */
+    left: -50%;
+    top: 60%;
+    width: 200%;
+    height: 100%;
+    /* The smoke is made of multiple large, soft, overlapping radial gradients */
+    background: radial-gradient(ellipse at center, hsla(210, 80%, 70%, 0.4) 0%, transparent 40%), /* Blueish smoke */
+                radial-gradient(ellipse at center, hsla(0, 80%, 75%, 0.4) 0%, transparent 45%),   /* Reddish smoke */
+                radial-gradient(ellipse at center, hsla(300, 80%, 75%, 0.4) 0%, transparent 45%); /* Pinkish smoke */
+    opacity: 0.7;
+    filter: blur(50px); /* Heavy blur for the smoky effect */
+    animation: smokeAnimation 25s infinite alternate ease-in-out;
 }
-.flashcard-front p {
-    font-family: 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
-    font-size: 3.4em; /* Increased */
-    font-weight: 500; color: #343a40; margin: 0; line-height: 1.25;
+
+@keyframes smokeAnimation {
+    0% {
+        /* Starting position and size of the gradient layers */
+        background-size: 40% 40%, 50% 50%, 35% 35%;
+        background-position: 10% 0%, 50% 0%, 90% 0%;
+        transform: translateY(0);
+    }
+    100% {
+        /* Ending position and size, creates horizontal floating and billowing */
+        background-size: 50% 50%, 35% 35%, 40% 40%;
+        background-position: 90% 0%, 10% 0%, 50% 0%;
+        transform: translateY(-10px);
+    }
 }
-.flashcard-back { transform: rotateY(180deg); gap: 18px; /* Increased gap */ }
+
+/* Text styles */
+.flashcard-front p { font-family: 'Noto Sans SC', 'Microsoft YaHei', sans-serif; font-size: 3.4em; font-weight: 500; color: #343a40; margin: 0; line-height: 1.25; }
 .flashcard-back p { margin: 0; line-height: 1.5; }
 
 /* Specific colors for back of card text */
-.flashcard-back .chinese-text {
-    font-family: 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
-    font-size: 2.5em; /* Increased */
-    font-weight: 500; color: black;
-}
-.flashcard-back .pinyin-text {
-    font-family: 'Roboto', 'Arial', sans-serif;
-    font-size: 1.6em; /* Increased */
-    color: red;
-}
-.flashcard-back .meaning-text {
-    font-family: 'Roboto', 'Segoe UI', sans-serif;
-    font-size: 1.5em; /* Increased */
-    color: darkblue;
-    font-weight: 400;
-}
+.flashcard-back .chinese-text { font-family: 'Noto Sans SC', 'Microsoft YaHei', sans-serif; font-size: 2.5em; font-weight: 500; color: black; }
+.flashcard-back .pinyin-text { font-family: 'Roboto', 'Arial', sans-serif; font-size: 1.6em; color: red; }
+.flashcard-back .meaning-text { font-family: 'Roboto', 'Segoe UI', sans-serif; font-size: 1.5em; color: darkblue; font-weight: 400; }
 
-/* Card Counter */
-.card-counter-display {
-    font-size: 0.95em; color: #495057;
-    font-weight: 500; margin-bottom: 15px;
-}
-
-/* Navigation Controls */
-.navigation-controls {
-    display: grid; /* Use grid for more control */
-    grid-template-columns: 1fr auto 1fr; /* Prev, Flip, Next */
-    align-items: center;
-    gap: 10px;
-    margin-top: 0; /* Removed top margin as counter is above */
-}
-.nav-button, .control-button {
-    background-color: #f8f9fa; border: 1px solid #dee2e6;
-    color: #343a40; padding: 10px 15px; /* Adjusted padding */
-    border-radius: 8px; cursor: pointer;
-    transition: all 0.25s ease; font-weight: 500;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    font-size: 0.9em; /* Slightly smaller button text */
-}
-.nav-button:first-child { justify-self: start; } /* Align Prev left */
-.nav-button:last-child { justify-self: end; }   /* Align Next right */
-.control-button { justify-self: center; } /* Center Flip */
-
-.nav-button:hover, .control-button:hover {
-    background-color: #e9ecef; border-color: #ced4da;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.07);
-    transform: translateY(-1px);
-}
-.nav-button:disabled, .control-button:disabled {
-    opacity: 0.65; cursor: not-allowed;
-    background-color: #f8f9fa; box-shadow: none;
-    transform: translateY(0);
-}
-
+/* Card Counter & Navigation */
+.card-counter-display { font-size: 0.95em; color: #495057; font-weight: 500; margin-bottom: 15px; }
+.navigation-controls { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 10px; margin-top: 0; }
+.nav-button, .control-button { background-color: #f8f9fa; border: 1px solid #dee2e6; color: #343a40; padding: 10px 15px; border-radius: 8px; cursor: pointer; transition: all 0.25s ease; font-weight: 500; box-shadow: 0 2px 4px rgba(0,0,0,0.05); font-size: 0.9em; }
+.nav-button:first-child { justify-self: start; }
+.nav-button:last-child { justify-self: end; }
+.control-button { justify-self: center; }
+.nav-button:hover, .control-button:hover { background-color: #e9ecef; border-color: #ced4da; box-shadow: 0 3px 6px rgba(0,0,0,0.07); transform: translateY(-1px); }
+.nav-button:disabled, .control-button:disabled { opacity: 0.65; cursor: not-allowed; background-color: #f8f9fa; box-shadow: none; transform: translateY(0); }
 footer { margin-top: 30px; font-size: 0.85em; color: #6c757d; }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .container { padding: 15px 20px; }
-    .flashcard-area { min-height: 360px; } /* Adjust for tablet */
+    .flashcard-area { min-height: 360px; }
     .flashcard { max-width: 95%; height: 320px; }
-    .flashcard-stack-bg { max-width: calc(95% - 20px); height: 320px; }
+    .flashcard-stack-bg { max-width: calc(95% - 20px); height: 320px; border-radius: 30px; }
+    .flashcard-front, .flashcard-back { border-radius: 30px; }
     .flashcard-front p { font-size: 3em; }
     .flashcard-back .chinese-text { font-size: 2.2em; }
     .flashcard-back .pinyin-text { font-size: 1.4em; }
     .flashcard-back .meaning-text { font-size: 1.3em; }
-    .navigation-controls { grid-template-columns: 1fr 1fr 1fr; /* Allow more equal spacing */ }
+    .navigation-controls { grid-template-columns: 1fr 1fr 1fr; }
 }
 
 @media (max-width: 480px) {
-    body { padding: 10px 5px; } /* Reduce body padding more */
-    .container { padding: 15px; margin-top: 5px; }
+    body { padding: 10px 5px; }
+    .container { padding: 15px; margin-top: 5px; border-radius: 15px; }
     header h1 { font-size: 1.7em; }
-    .instructions { font-size: 0.85em; margin-bottom: 15px; }
-    .upload-button { padding: 9px 18px; font-size: 0.9em; }
-    .settings-panel { padding: 12px; gap: 10px; margin-bottom: 20px; }
-    .panel-label { font-size: 0.9em; }
-    .mode-button { padding: 6px 12px; font-size: 0.8em; }
-    input[type="range"] { height: 6px; }
-    input[type="range"]::-webkit-slider-thumb { width: 16px; height: 16px; }
-    input[type="range"]::-moz-range-thumb { width: 16px; height: 16px; }
-    .flashcard-area { min-height: 320px; /* Further adjust for mobile */ margin-bottom:10px; }
-    .flashcard { height: 280px; } /* Smaller on mobile */
-    .flashcard-stack-bg { height: 280px; }
+    .flashcard-area { min-height: 320px; margin-bottom:10px; }
+    .flashcard { height: 280px; border-radius: 25px; }
+    .flashcard-front, .flashcard-back { border-radius: 25px; }
+    .flashcard-stack-bg { height: 280px; border-radius: 25px; }
     .flashcard-stack-bg-1 { transform: scale(0.95) translateY(8px); }
     .flashcard-stack-bg-2 { transform: scale(0.90) translateY(16px); }
     .flashcard-front p { font-size: 2.5em; }
     .flashcard-back .chinese-text { font-size: 2em; }
     .flashcard-back .pinyin-text { font-size: 1.2em; }
     .flashcard-back .meaning-text { font-size: 1.1em; }
-    .navigation-controls { gap: 8px; }
-    .nav-button, .control-button { padding: 8px 10px; font-size: 0.85em; }
-    .card-counter-display { font-size: 0.9em; margin-bottom: 10px; }
+    .flashcard-front::before, .flashcard-back::before { filter: blur(40px); }
 }
